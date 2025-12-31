@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product Alpha - Version A</title>
+</head>
+<body>
+
+<h1>Product Alpha</h1>
+<p>This is a high-quality, reliable product designed for everyday use.</p>
+
+<button onclick="trackClick()">Interested</button>
+
+<p>Rate this product:</p>
+<select id="rating">
+  <option value="1">1 - Poor</option>
+  <option value="2">2 - Fair</option>
+  <option value="3">3 - Good</option>
+  <option value="4">4 - Very Good</option>
+  <option value="5">5 - Excellent</option>
+</select>
+
+<p>Your Feedback:</p>
+<textarea id="feedback"></textarea>
+
+<br><br>
+<button onclick="saveData('A')">Submit & Save Data</button>
+
+<script>
+  let startTime = new Date().getTime();
+  let clicks = 0;
+
+  function trackClick() {
+    clicks++;
+    alert("Click recorded for Product Alpha!");
+  }
+
+  function saveData(version) {
+    let rating = document.getElementById("rating").value;
+    let feedback = document.getElementById("feedback").value;
+    let timeSpent = (new Date().getTime() - startTime) / 1000;
+
+    let data = "Version,Clicks,TimeSpent,Rating,Feedback\n";
+    data += version + "," + clicks + "," + timeSpent + "," + rating + "," + feedback;
+
+    let blob = new Blob([data], { type: "text/csv" });
+    let link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "student_data_A.csv";
+    link.click();
+  }
+</script>
+
+</body>
+</html>

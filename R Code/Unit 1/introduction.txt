@@ -1,0 +1,573 @@
+# ============================================================
+# 1. WORKING WITH LS() - EXERCISE 1: VIEW AND MANAGE WORKSPACE
+# ============================================================
+
+# Create initial objects
+x <- 10
+y <- c(1, 2, 3)
+name <- "R Programming"
+
+# List all objects
+ls()
+
+# Task 1: Create 5 more objects and list again
+obj1 <- "First object"
+obj2 <- 3.14
+obj3 <- TRUE
+obj4 <- data.frame(a = 1:3, b = letters[1:3])
+obj5 <- function(x) x^2
+ls()
+
+# Task 2: Remove one object
+rm(x)
+ls()
+
+# Task 3: Remove all objects
+rm(list = ls())
+ls()
+
+# ============================================================
+# 2. BASIC USAGE OF LS()
+# ============================================================
+
+# Create test objects
+x <- 1:10
+y <- data.frame(id = 1:5, value = rnorm(5))
+my_function <- function(a, b) a + b
+
+# List all objects
+ls()
+
+# Equivalent using objects()
+objects()
+
+# List objects in specific environment
+ls(envir = globalenv())
+
+# List objects in stats package environment
+ls(envir = as.environment("package:stats"))
+
+# ============================================================
+# 3. ADVANCED FILTERING WITH LS()
+# ============================================================
+
+# Create test objects with patterns
+x_data <- 1:5
+y_data <- 6:10
+temp_result <- "temporary"
+final_data <- "final"
+Data_analysis <- "analysis"
+
+# List objects starting with 'x'
+ls(pattern = "^x")
+
+# List objects ending with 'data'
+ls(pattern = "data$")
+
+# List objects containing 'temp'
+ls(pattern = "temp")
+
+# Case-insensitive search for 'data'
+# Note: (?i) may not work in all R versions
+grep("data", ls(), value = TRUE, ignore.case = TRUE)
+
+# ============================================================
+# 4. PACKAGE MANAGEMENT BASICS
+# ============================================================
+
+# 4.1 Installing Packages from CRAN
+# Install single package (commented to avoid actual installation)
+# install.packages("ggplot2")
+
+# Install multiple packages
+# install.packages(c("dplyr", "tidyr", "readr"))
+
+# Install with dependencies
+# install.packages("tidyverse", dependencies = TRUE)
+
+# 4.2 Installing from Bioconductor
+# First install BiocManager
+if (!require("BiocManager", quietly = TRUE)) {
+    # install.packages("BiocManager")
+}
+
+# Then install Bioconductor packages
+# BiocManager::install("DESeq2")
+
+# 4.3 Installing from GitHub
+# Install devtools first
+# install.packages("devtools")
+
+# Install from GitHub
+# devtools::install_github("tidyverse/ggplot2")
+
+# 4.4 Loading Packages
+# Load package (commented as ggplot2 may not be installed)
+# library(ggplot2)
+
+# Load without messages
+# suppressPackageStartupMessages(library(dplyr))
+
+# Load with require() - returns TRUE/FALSE
+# require(ggplot2)
+
+# Use specific function without loading whole package
+# dplyr::filter(mtcars, mpg > 20)
+
+# 4.5 Checking Package Availability
+# Check if package is installed
+"ggplot2" %in% installed.packages()
+
+# Check and install if missing
+if (!require("ggplot2")) {
+    # install.packages("ggplot2")
+}
+
+# Better function to check and install
+install_if_missing <- function(packages) {
+  new_packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+  if(length(new_packages)) {
+    # install.packages(new_packages)
+    message("Would install: ", paste(new_packages, collapse = ", "))
+  }
+  return(new_packages)
+}
+
+# Usage
+install_if_missing(c("ggplot2", "dplyr", "tidyr"))
+
+# 4.6 Getting Package Info
+# Package description (if installed)
+if ("ggplot2" %in% installed.packages()) {
+  packageDescription("ggplot2")
+}
+
+# Version information
+if ("ggplot2" %in% installed.packages()) {
+  packageVersion("ggplot2")
+}
+
+# All installed packages with versions
+installed.packages()[1:5, c("Package", "Version")]  # First 5 only
+
+# Search for packages by keyword
+# available.packages(filters = "duplicates")[1:5, c("Package", "Version")]
+
+# 4.7 Viewing Package Contents
+# List all functions in a package (if installed)
+if ("ggplot2" %in% installed.packages()) {
+  ls("package:ggplot2")[1:10]  # First 10 functions only
+}
+
+# Get help for entire package
+# help(package = "ggplot2")
+
+# View package vignettes
+# vignette(package = "ggplot2")
+
+# ============================================================
+# 5. MANAGING PACKAGE DEPENDENCIES
+# ============================================================
+
+# 5.1 Understanding Dependencies
+# View package dependencies (if installed)
+if ("ggplot2" %in% installed.packages()) {
+  tools::package_dependencies("ggplot2")
+}
+
+# View reverse dependencies
+if ("ggplot2" %in% installed.packages()) {
+  tools::dependsOnPkgs("ggplot2")
+}
+
+# 5.2 Managing Dependency Conflicts
+# Check for masked functions
+conflicts(detail = TRUE)
+
+# See which package is masking a function
+find("filter")
+
+# Use specific function from package
+# dplyr::filter(mtcars, mpg > 20)
+# stats::filter(1:10, rep(1, 3))
+
+# Detach package causing conflict
+# detach("package:dplyr", unload = TRUE)
+
+# 5.3 Version Management
+# Check package versions
+sessionInfo()
+
+# Compare versions
+if ("dplyr" %in% installed.packages()) {
+  packageVersion("dplyr") >= "1.0.0"
+}
+
+# Update specific package
+# update.packages("ggplot2")
+
+# Update all packages
+# update.packages(ask = FALSE, checkBuilt = TRUE)
+
+# Check for updates
+old.packages()
+
+# ============================================================
+# 5.4 INSTALLING PACKAGES - EXERCISE 2
+# ============================================================
+
+# Task 1: Try installing 3 more packages (commented)
+# install.packages("tidyr")
+# install.packages("stringr")
+# install.packages("readr")
+
+# Task 2: Install multiple packages at once
+# install.packages(c("plotly", "lubridate"))
+
+# ============================================================
+# 5.5 LOADING AND UNLOADING PACKAGES - EXERCISE 3
+# ============================================================
+
+# Task 1: Load 2 packages (if installed)
+if ("dplyr" %in% installed.packages()) {
+  library(dplyr)
+}
+if ("ggplot2" %in% installed.packages()) {
+  require(ggplot2)
+}
+
+# Task 2: Unload a package
+# detach("package:dplyr", unload = TRUE)
+
+# ============================================================
+# 5.6 LISTING INSTALLED PACKAGES - EXERCISE 4
+# ============================================================
+
+# Task 1: Save list of installed packages
+pkgs <- installed.packages()
+
+# Task 2: Extract only package names
+package_names <- pkgs[, "Package"]
+head(package_names, 10)  # Show first 10
+
+# ============================================================
+# 6. USING THE HELP SYSTEM - EXERCISE 5
+# ============================================================
+
+# Basic help
+help(mean)
+?sum
+
+# Task 1: Explore help pages
+# help(plot)
+# help(seq)
+# help(matrix)
+
+# Task 2: Check help for package
+# help(package = "ggplot2")
+
+# ============================================================
+# 6.1 SEARCHING FUNCTIONS - EXERCISE 6
+# ============================================================
+
+# Search for functions containing "plot"
+apropos("plot")[1:5]  # First 5 results
+
+# Search for functions containing "mean"
+apropos("mean")[1:5]
+
+# Task 1: Search for all functions containing "read"
+apropos("read")[1:5]
+
+# Task 2: Search for functions related to "lm"
+apropos("lm")[1:5]
+
+# ============================================================
+# 6.2 CHECKING FUNCTION ARGUMENTS - EXERCISE 7
+# ============================================================
+
+# Check arguments of mean function
+args(mean)
+
+# Run examples for mean
+example(mean)
+
+# Task 1: Try args() for other functions
+args(sum)
+args(lm)
+args(paste)
+
+# Task 2: Run example for boxplot
+example(boxplot)
+
+# ============================================================
+# 6.3 VIEWING FUNCTION CODE - EXERCISE 8
+# ============================================================
+
+# View mean function code
+getAnywhere(mean)
+
+# Task 1: Try getAnywhere() for other functions
+getAnywhere(median)
+getAnywhere(quantile)
+
+# ============================================================
+# 6.4 FINDING VIGNETTES - EXERCISE 9
+# ============================================================
+
+# List all vignettes
+vignette()
+
+# View vignettes for specific package
+# vignette(package = "ggplot2")
+
+# Task 1: Open a vignette (if package installed)
+# vignette("dplyr")
+
+# Task 2: Search vignette titles
+all_vignettes <- vignette(all = TRUE)
+head(all_vignettes, 10)  # First 10
+
+# ============================================================
+# 10. COMBINED MINI LAB - EXERCISE 10
+# ============================================================
+
+# Task 1: Install tidyverse (commented)
+# install.packages("tidyverse")
+
+# Task 2: Load it (if installed)
+if ("tidyverse" %in% installed.packages()) {
+  library(tidyverse)
+}
+
+# Task 3: Search for help related to "filter"
+help.search("filter")
+
+# Task 4: View examples of filter() (if dplyr loaded)
+if ("dplyr" %in% .packages()) {
+  example(filter)
+}
+
+# Task 5: List all objects in workspace
+ls()
+
+# Task 6: Remove all objects
+rm(list = ls())
+
+# Task 7: Confirm empty workspace
+ls()
+
+# ============================================================
+# B. PRACTICE EXERCISES: R DATA TYPES
+# ============================================================
+
+# 1. NUMERIC DATA TYPE - EXERCISE 1
+# Create numeric variables
+a <- 25.5
+b <- 12
+
+# Perform operations
+sum_val <- a + b
+diff_val <- a - b
+prod_val <- a * b
+quot_val <- a / b
+
+# Display results
+cat("Sum:", sum_val, "\n")
+cat("Difference:", diff_val, "\n")
+cat("Product:", prod_val, "\n")
+cat("Quotient:", quot_val, "\n")
+
+# Task 1: Change values and compute
+a <- 49
+b <- 7
+sqrt_val <- sqrt(a)
+log_val <- log(a)
+cat("Square root:", sqrt_val, "\n")
+cat("Natural log:", log_val, "\n")
+
+# ============================================================
+# 2. INTEGER DATA TYPE - EXERCISE 2
+# Declare integers
+x <- 10L
+y <- 3L
+
+# Check class and operations
+cat("Class of x:", class(x), "\n")
+cat("x + y:", x + y, "\n")
+cat("x %% y (modulus):", x %% y, "\n")
+cat("x %/% y (integer division):", x %/% y, "\n")
+
+# Task: Generate integers
+int_seq <- 1:20
+int_seq2 <- seq(1L, 20L, by = 1L)
+cat("Integers 1:20:", int_seq, "\n")
+cat("Via seq:", int_seq2, "\n")
+
+# ============================================================
+# 3. CHARACTER DATA TYPE - EXERCISE 3
+# Working with text
+name <- "R Programming"
+cat("Original:", name, "\n")
+cat("Substring (1-5):", substring(name, 1, 5), "\n")
+cat("Pasted:", paste("Welcome to", name), "\n")
+cat("Number of characters:", nchar(name), "\n")
+
+# Task 1: Replace with own text
+my_text <- "Data Science with R"
+cat("My text:", my_text, "\n")
+
+# Task 2: Extract last 4 characters
+last_four <- substr(my_text, nchar(my_text)-3, nchar(my_text))
+cat("Last 4 chars:", last_four, "\n")
+
+# ============================================================
+# 4. LOGICAL DATA TYPE - EXERCISE 4
+# Logical operations
+x <- TRUE
+y <- FALSE
+cat("x & y (AND):", x & y, "\n")
+cat("x | y (OR):", x | y, "\n")
+cat("!x (NOT):", !x, "\n")
+
+# Task: Test random numbers
+set.seed(123)  # For reproducibility
+random_nums <- runif(10, 0, 100)
+above_50 <- random_nums > 50
+cat("Random numbers:", round(random_nums, 2), "\n")
+cat("Above 50?:", above_50, "\n")
+
+# ============================================================
+# 5. VECTOR DATA TYPE - EXERCISE 5
+# Creating vectors
+v <- c(10, 20, 30, 40)
+cat("Vector v:", v, "\n")
+cat("Length:", length(v), "\n")
+cat("Second element:", v[2], "\n")
+cat("Multiplied by 2:", v * 2, "\n")
+
+# Task: Create different type vectors
+movies <- c("Inception", "Interstellar", "Matrix", "Avatar", "Titanic")
+marks <- c(85, 92, 78, 88, 95)
+logical_vec <- c(TRUE, FALSE, TRUE, TRUE, FALSE)
+
+cat("Movies:", movies, "\n")
+cat("Marks:", marks, "\n")
+cat("Logical:", logical_vec, "\n")
+
+# ============================================================
+# 6. FACTOR DATA TYPE - EXERCISE 6
+# Categorical data
+colors <- factor(c("red", "blue", "red", "green"))
+cat("Colors factor:", colors, "\n")
+cat("Levels:", levels(colors), "\n")
+cat("Frequency table:\n")
+print(table(colors))
+
+# Task: Create ordered factor
+ratings <- factor(c("low", "medium", "high", "low", "high"),
+                  levels = c("low", "medium", "high"),
+                  ordered = TRUE)
+cat("Ordered ratings:", ratings, "\n")
+cat("Is ratings ordered?:", is.ordered(ratings), "\n")
+
+# ============================================================
+# 7. LIST DATA TYPE - EXERCISE 7
+# Mixed elements list
+student <- list(
+  name = "Arjun",
+  age = 21,
+  marks = c(80, 75, 90)
+)
+cat("Student list:\n")
+print(student)
+cat("Name:", student$name, "\n")
+cat("Second mark:", student$marks[2], "\n")
+
+# Task: Add course element
+student$course <- "Data Science"
+cat("Updated student list:\n")
+print(student)
+
+# ============================================================
+# 8. MATRIX DATA TYPE - EXERCISE 8
+# Creating matrices
+m <- matrix(1:9, nrow = 3, byrow = TRUE)
+cat("3x3 matrix:\n")
+print(m)
+cat("Sum of all elements:", sum(m), "\n")
+cat("Second column:", m[,2], "\n")
+
+# Task: Multiply two 2x2 matrices
+m1 <- matrix(c(1,2,3,4), nrow = 2)
+m2 <- matrix(c(5,6,7,8), nrow = 2)
+product <- m1 %*% m2
+cat("Matrix 1:\n")
+print(m1)
+cat("Matrix 2:\n")
+print(m2)
+cat("Matrix product:\n")
+print(product)
+
+# ============================================================
+# 9. DATA FRAME DATA TYPE - EXERCISE 9
+# Tabular data
+df <- data.frame(
+  id = 1:4,
+  name = c("A", "B", "C", "D"),
+  score = c(88, 76, 90, 85)
+)
+cat("Data frame:\n")
+print(df)
+cat("Summary:\n")
+print(summary(df))
+cat("Name column:", df$name, "\n")
+cat("Scores above 80:\n")
+print(df[df$score > 80, ])
+
+# Task: Add grade column based on score
+df$grade <- ifelse(df$score >= 90, "A",
+                  ifelse(df$score >= 80, "B",
+                         ifelse(df$score >= 70, "C", "D")))
+cat("Data frame with grades:\n")
+print(df)
+
+# ============================================================
+# 10. COMBINED MINI PROJECT - EXERCISE 10
+# ============================================================
+
+# Build comprehensive student dataset
+students <- data.frame(
+  roll = 1:5,
+  name = c("Akhil", "Bina", "Charan", "Divya", "Esha"),
+  marks = c(78, 85, 92, 67, 88),
+  pass = c(TRUE, TRUE, TRUE, FALSE, TRUE),
+  section = factor(c("A", "A", "B", "B", "A"))
+)
+
+cat("Student dataset:\n")
+print(students)
+cat("\nDataset structure:\n")
+str(students)
+cat("\nSummary statistics:\n")
+print(summary(students))
+
+# Additional analysis
+cat("\nAverage marks:", mean(students$marks), "\n")
+cat("Pass percentage:", mean(students$pass) * 100, "%\n")
+cat("Students by section:\n")
+print(table(students$section))
+
+# Add calculated column
+students$percentage <- round(students$marks, 1)
+cat("\nFinal dataset with percentages:\n")
+print(students)
+
+# ============================================================
+# CLEANUP SECTION
+# ============================================================
+
+# Remove all created objects to clean workspace
+rm(list = ls())
+cat("\nWorkspace cleaned. Current objects:\n")
+print(ls())
