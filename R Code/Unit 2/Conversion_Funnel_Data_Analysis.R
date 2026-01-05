@@ -1,3 +1,9 @@
+# Generate funnel summary data
+funnel_data <- data.frame(
+  stage = c("Visitors", "Product Views", "Add to Cart", "Checkout Start", "Purchases"),
+  count = c(10000, 4000, 800, 320, 200)
+)
+
 # Funnel visualization and analysis
 library(ggplot2)
 
