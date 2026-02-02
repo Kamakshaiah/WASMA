@@ -3,7 +3,18 @@ library(ggplot2)
 library(lubridate)
 
 traffic <- read.csv("website_traffic_sample.csv")
+names(traffic)
+getwd()
+setwd("E:/Academics/2025-2026/Web and Social Media Analytics/R Code/Unit 2")
+list.files()
+
+is.Date(traffic$date)
 traffic$date <- as.Date(traffic$date)
+# head(traffic)
+# levels(as.factor(traffic$source))
+# tapply(traffic$sessions, traffic$source, mean)
+# plot(tapply(traffic$sessions, traffic$source, mean), type = "b")
+
 
 # 1. Overall traffic trend
 ggplot(traffic, aes(x = date, y = sessions)) +
@@ -12,6 +23,7 @@ ggplot(traffic, aes(x = date, y = sessions)) +
   labs(title = "Website Traffic Trend by Source",
        x = "Date", y = "Sessions") +
   theme_minimal()
+
 
 # 2. Traffic source distribution
 source_summary <- traffic %>%

@@ -1,0 +1,11 @@
+Age,Monthly_Charges,Tenure,Support_Tickets,Churn
+22,1200,3,5,Yes
+35,800,12,2,No
+45,600,24,1,No
+30,1000,6,4,Yes
+50,500,36,0,No
+28,1100,5,3,Yes
+40,700,20,2,No
+55,450,48,0,No
+33,950,8,3,Yes
+48,550,30,1,No

@@ -1,6 +1,17 @@
 # Load behavior data
 behavior <- read.csv(file.choose())
 
+for(i in names(behavior)){
+  print(i)
+}
+
+names(behavior)
+head(behavior)
+tail(behavior)
+sum(behavior$conversion == 1)
+dim(behavior)
+
+
 # 1. User engagement metrics
 engagement_summary <- behavior %>%
   summarise(

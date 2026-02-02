@@ -162,7 +162,7 @@ print(mean(pred_derived == dtm_df$derived_label))
 #############################
 
 # This is NOT text classification
-# Task: Predict presence of a specific word using other words
+Task: Predict presence of a specific word using other words
 
 target_word <- "market"
 

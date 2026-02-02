@@ -1,3 +1,5 @@
+#NOTE: REFINE/USE DIFFERENT APPROACH FOR DATA SIMULATIONS AND ANALYSIS
+
 # Engagement Rate 
 likes <- c(120, 340, 560)
 comments <- c(30, 45, 80)

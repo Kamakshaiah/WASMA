@@ -1,3 +1,5 @@
+#NOTE: REFINE/USE DIFFERENT APPROACH FOR DATA SIMULATIONS AND ANALYSIS
+
 # Content Performance Measurement
 
 impressions <- c(1000, 2000, 1500)
